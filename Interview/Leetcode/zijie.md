@@ -15,23 +15,23 @@
         }
     }
     return result
+    //注意循环次数
 }
 ```
 
 * (#53) 给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。(贪心算法，每次都贪最大的)
 ```js
 var  maxSubArray = function(nums) {
-    let ans = nums[0];
-    let sum = 0;
-    for(const num of nums){
-        if(sum>0){
-            sum = sum + num
-        }else{
-            sum = num
-        }
-        ans = Math.max(ans,sum)
-    }
-    return ans
+let max = ans = nums[0]
+  for(let i = 1;i<nums.length;i++){
+      if(ans<0){
+          ans = nums[i]
+      }else{
+          ans = ans + nums[i]
+      }
+      max = Math.max(ans,max)
+  }
+  return max 
 }
 ```
 
@@ -87,16 +87,16 @@ var isValid = function(s) {
 2. 假设我们的环境只能存储得下 32 位的有符号整数，则其数值范围为 [−231,  231 − 1]。请根据这个假设，如果反转后整数溢出那么就返回 0。
 ```js
 var reverse = function(x) {
-    let absX = Math.abs(x)
-    let strX = x+""
-    let arr = x.split("")
-    arr1.reverse()
-    x = x<0?-parseInt(arr1.join("")):parseInt(arr1.join(""))
-    if(x> (2**31)-1  || x< -(2**31)){
+   if(x> (2**31)-1  || x< -(2**31)){
         return 0;
     }
+    let absX = Math.abs(x)
+    let strX = x+""
+    let arr = strX.split("")
+    arr.reverse()
+    x = x<0?-parseInt(arr.join("")):parseInt(arr.join(""))
     return x
-}
+};
 ```
 * (#206)反正一个单链表
 1. 输入: 1->2->3->4->5->NULL   ，输出: 5->4->3->2->1->NULL
@@ -111,6 +111,7 @@ var reverseList = function(head) {
         curr = temp
     }
     return prev
+    //注意返回的是prev（和head对应）
 }
 ```
 
@@ -149,20 +150,22 @@ var climbStairs = function(n) {
 2. 你可以假设 nums1 有足够的空间（空间大小大于或等于 m + n）来保存 nums2 中的元素。
 
 ```js
-var merge = function(nums1, m, nums2, n) {
-let tail = m+n-1
-let len1 = m-1
-let len2 = n-2
-while(len2>=0){
-    if(nums2[len2]>nums1[len1]){
-        nums1[tail] = nums2[len2]
-        len2--
-        tail--
-    }else{
-        nums1[tail] = nums1[len1]
-        len1--
-        tail--
+function merge(arr1,arr2){
+    let len1 = arr1.length - 1
+    let len2 = arr2.length - 1
+    let len = len1 + len2 + 1
+    while(len2>=0){
+        if(arr1[len1]>arr2[len2]){
+            arr1[len] = arr1[len1]
+            len1--
+            len--
+        }else{
+            arr1[len] = arr2[len2]
+            len2--
+            len--
+        }
     }
+    return arr1
 }
 ```
 
@@ -178,7 +181,7 @@ var longestCommonPrefix = function(strs) {
    for(let i = 0 ; i < ans.length;i++){
        for(let j = 0 ; j <strs.length;j++){
            if(ans[i]!=strs[j][i]){
-               ans =  ans.substr(0,i)
+                 ans =  ans.substring(0,i)
            }
        }
    }
